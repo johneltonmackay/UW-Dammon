@@ -1,0 +1,165 @@
+<!-- Declare HTML5 DOCTYPE. This is needed because Bootstrap will no work if the DOCTYPE isn't HTML5 -->
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title>Registration Form</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <!-- Include Bootstrap CSS from CDN -->
+      <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+
+      <!-- You can include Custom Styling -->
+      <style>
+         #main_section {
+            padding-top: 60px;
+         }
+         input[type="text"], select {
+            width: 90%;
+         }
+         option {
+            font-size: 14px;
+            font-weight: normal;
+            line-height: 20px;
+         }
+         @media (min-width: 960px) {
+            #captcha_section {
+               margin-left: 55px;
+            }
+         }
+      </style>
+   </head>
+   <body>
+
+      <!-- This section is for the Nav Bar -->
+      <div class="navbar navbar-inverse navbar-fixed-top">
+         <div class="navbar-inner">
+            <div class="container">
+               <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               </button>
+               <a class="brand" href="http://benjsicam.me/blog/how-to-use-google-recaptcha-on-netsuite-forms-part-1-tutorial">NetSuite reCaptcha</a>
+               <div class="nav-collapse collapse">
+                  <ul class="nav">
+                     <li class="active">
+                        <a href="http://benjsicam.me">Home</a>
+                     </li>
+                     <li>
+                        <a href="http://benjsicam.me/contact-me/">Contact</a>
+                     </li>
+                  </ul>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <!-- This section is for the main body and the form -->
+      <div id="main_section" class="container">
+         <div class="page-header">
+            <h3>Registration Form<br/><small>Please complete the form below.</small></h3>
+         </div>
+
+         <!-- This is required by NetSuite as it will generate the form element which will do a POST request to the back-end -->
+         <NLFORM>
+
+            <!-- Now you can specify your fields. You can use CRMSDK or what is commonly called the NL tags on this HTML Document -->
+            <fieldset class="row span11">
+               <div class="span5">
+                  <div class="control-group">
+                     <label class="control-label">*First Name</label>
+                     <div class="controls">
+
+                        <!-- This will be translated by NetSuite to an input field for First Name -->
+                        <NLFIRSTNAME>
+                     </div>
+                  </div>
+                  <div class="control-group">
+                     <label class="control-label">*Last Name</label>
+                     <div class="controls">
+
+                        <!-- This will be translated by NetSuite to an input field for Last Name -->
+                        <NLLASTNAME>
+                     </div>
+                  </div>
+                  <div class="control-group">
+                     <label class="control-label">*Company Name</label>
+                     <div class="controls">
+
+                        <!-- This will be translated by NetSuite to an input field for Company Name -->
+                        <NLCOMPANYNAME>
+                     </div>
+                  </div>
+                  <div class="control-group">
+                     <label class="control-label">*Email</label>
+                     <div class="controls">
+
+                        <!-- This will be translated by NetSuite to an input field for Email -->
+                        <NLEMAIL>
+                     </div>
+                  </div>
+               </div>
+               <div class="span5">
+                  <div class="control-group">
+                     <label class="control-label">Street Address</label>
+                     <div class="controls">
+
+                        <!-- This will be translated by NetSuite to an input field for Street Address or Address 1 -->
+                        <NLADDRESS1>
+                     </div>
+                  </div>
+                  <div class="control-group">
+                     <label class="control-label">City</label>
+                     <div class="controls">
+
+                        <!-- This will be translated by NetSuite to an input field for City -->
+                        <NLCITY>
+                     </div>
+                  </div>
+                  <div class="control-group">
+                     <label class="control-label">State</label>
+                     <div class="controls">
+
+                        <!-- This will be translated by NetSuite to a select field for State -->
+                        <NLSTATE>
+                     </div>
+                  </div>
+                  <div class="control-group">
+                     <label class="control-label">Zip</label>
+                     <div class="controls">
+
+                        <!-- This will be translated by NetSuite to an input field for Zip Code -->
+                        <NLZIPCODE>
+                     </div>
+                  </div>
+               </div>
+            </fieldset>
+            <fieldset id="captcha_section" class="row span11">
+
+               <!-- 
+                  This is where the fun starts. This is the embed code for Google's reCaptcha. It is
+                  pretty standard since what you need to do is just replace the value for the "k" 
+                  parameter with the public key you've obtained from the part 1 of the tutorial.
+               -->
+               <script type="text/javascript" src="https://www.google.com/recaptcha/api/challenge?k=6Lf1-OASAAAAAJlNTtZENc70GhUiV6sUMpqX4BTR"></script>
+               <noscript>
+                  <iframe src="https://www.google.com/recaptcha/api/noscript?k=6Lf1-OASAAAAAJlNTtZENc70GhUiV6sUMpqX4BTR" height="300" width="500"></iframe><br/>
+                  <textarea name="recaptcha_challenge_field" rows="3" cols="40">
+                  </textarea>
+                  <input type="hidden" name="recaptcha_response_field" value="manual_challenge" />
+               </noscript>
+
+               <!-- Of course we need a way to submit our form so we need to include none other than the Submit button -->
+               <input id="submitorder" type="submit" class="btn btn-primary" style="margin-top: 20px;" value="Submit" />
+            </fieldset>
+         </form>
+      </div>
+
+      <!-- Include jQuery library. This is a dependency of bootstrap and we will also use this later on. -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+      <!-- Include the Bootstrap JavaScript library -->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+   </body>
+</html>
